@@ -201,10 +201,10 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             int(date.timestamp()),
         )
         line = {
-            "name": payment_reference or description or "",
+            "payment_ref": payment_reference or description or "",
             "amount": str(amount_value),
             "date": date,
-            "payment_ref": pay_ref,
+            "ref": pay_ref,
             "unique_import_id": unique_import_id,
         }
         if recipient:
@@ -251,12 +251,12 @@ class OnlineBankStatementProviderTransferwise(models.Model):
         if fees_value:
             lines += [
                 {
-                    "name": _("Fee for %s") % reference_number,
+                    "payment_ref": _("Fee for %s") % reference_number,
                     "amount": str(fees_value),
                     "date": date,
                     "partner_name": "Wise (former TransferWise)",
                     "unique_import_id": "%s-FEE" % unique_import_id,
-                    "payment_ref": _("Transaction fee for %s") % reference_number,
+                    "ref": _("Transaction fee for %s") % reference_number,
                 }
             ]
         return lines
